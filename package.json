@@ -1,0 +1,12 @@
+{
+  "name": "floof-bot",
+  "version": "1.0.0",
+  "description": "discord.js bot for floof transit",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TickoGrey",
+  "license": "UNLICENSED"
+}
