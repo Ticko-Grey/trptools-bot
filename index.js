@@ -7,6 +7,7 @@ import fs from 'fs'
 import * as time from "./modules/time.js"
 import * as configFile from "./modules/config.js"
 import * as commands from "./modules/commands/index.js"
+import * as interactionHandlers from "./modules/interactions/index.js"
 
 // Setup
 const config = configFile.get()
@@ -27,20 +28,33 @@ rest.put(Routes.applicationCommands(process.env.CID_DISCORD), { body: config.com
 
 // Connect slash commands
 client.on("interactionCreate", (interaction) => {
-  if (!interaction.isChatInputCommand()) return
+  if (interaction.isChatInputCommand()) {
+    // load command
+    const func = commands[interaction.commandName]
+    if (!func) { // handle error if command doesnt exist
+      interaction.reply({
+        content: "Could not fetch command",
+        ephemeral: true
+      })
+      return
+    }
 
-  // load command
-  const func = commands[interaction.commandName]
-  if (!func) { // handle error if command doesnt exist
-    interaction.reply({
-      content: "Could not fetch command",
-      ephemeral: true
-    })
-    return
+    // run command
+    func(interaction)
+  } else if (interaction.isModalSubmit) {
+    // load interaction handler
+    const func = interactionHandlers[interaction.customId]
+    if (!func) { // handle error if command doesnt exist
+      interaction.reply({
+        content: "Could not fetch interaction handler",
+        ephemeral: true
+      })
+      return
+    }
+
+    // handle interaction
+    func(interaction)
   }
-
-  // run command
-  func(interaction)
 });
 
 // Establish connection
