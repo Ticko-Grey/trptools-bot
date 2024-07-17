@@ -41,7 +41,7 @@ client.on("interactionCreate", (interaction) => {
 
     // run command
     func(interaction)
-  } else if (interaction.isModalSubmit) {
+  } else {
     // load interaction handler
     const func = interactionHandlers[interaction.customId]
     if (!func) { // handle error if command doesnt exist

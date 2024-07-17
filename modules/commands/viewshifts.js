@@ -6,10 +6,14 @@ export function viewshifts(interaction) {
     let fields = []
 
     for (let i = 0; i < shifts.length; i++) {
-        fields[i] = {inline : true, name : shifts[i].UID, value : `<t:${Math.floor(getShiftTime(shifts[i]).getTime() / 1000)}:f>`}
+        let name
+        if (shifts[i].expires) {
+            name = shifts[i].UID + " (no repeat)"
+        } else {
+            name = shifts[i].UID
+        }
+        fields[i] = {inline : true, name : name, value : `<t:${Math.floor(getShiftTime(shifts[i]).getTime() / 1000)}:f>`}
     }
-
-    console.log(fields)
         
     const embedResponse = new EmbedBuilder()
     .setColor(0x4287f5)

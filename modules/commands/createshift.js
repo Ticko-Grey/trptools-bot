@@ -8,17 +8,24 @@ export async function createshift(interaction) {
   const dow = new TextInputBuilder()
     .setCustomId('dayofweek')
     .setLabel("Day of the week")
-    .setStyle(TextInputStyle.Short);
+    .setStyle(TextInputStyle.Short)
+    .setPlaceholder('sunday, monday, tue, wed, etc')
+    .setMinLength(3)
+    .setMaxLength(9);
 
   const time = new TextInputBuilder()
     .setCustomId('time')
-    .setLabel("Time")
-    .setStyle(TextInputStyle.Short);
+    .setLabel("Time (UTC)")
+    .setStyle(TextInputStyle.Short)
+    .setPlaceholder('17:00')
+    .setMinLength(5)
+    .setMaxLength(5);
 
   const shiftname = new TextInputBuilder()
     .setCustomId('name')
     .setLabel("Shift name")
-    .setStyle(TextInputStyle.Short);
+    .setStyle(TextInputStyle.Short)
+    .setRequired(false);
 
   const firstActionRow = new ActionRowBuilder().addComponents(dow);
   const secondActionRow = new ActionRowBuilder().addComponents(time);

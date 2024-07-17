@@ -7,6 +7,15 @@ export function getAllShifts() {
     return config.shiftTimes.concat(custom)
 }
 
+export function getCustomShifts() {
+    return custom
+}
+
+export function removeCustomShift(id) {
+    const shiftObjectIndex = custom.findIndex((sh) => sh.UID == id)
+    custom.splice(shiftObjectIndex, 1)
+}
+
 function getNearestShift(ignoreUID) {
     // join the config times with the times set during runtimes
     let shiftTimes = config.shiftTimes.concat(custom)
@@ -54,8 +63,12 @@ export function addCustomShift(day, time, id) {
     const shiftObject = {
         dayOfWeek : day,
         timeUTC : time,
-        UID : id || Math.ceil(Math.random() * (100 - 16) + 16)
+        UID : id || "Shift " + (Math.ceil(Math.random() * (100 - 16) + 16)).toString()
     }
+
+    const runTime = getShiftTime(shiftObject)
+    shiftObject.expires = runTime
+
     custom.push(shiftObject)
     return shiftObject
 }
