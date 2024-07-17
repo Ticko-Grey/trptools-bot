@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js'
 
-export async function createshift(interaction) {
+export async function shiftcreate(interaction) {
   const modal = new ModalBuilder()
     .setCustomId('createshift')
     .setTitle('Schedule a new shift');

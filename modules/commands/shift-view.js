@@ -1,7 +1,7 @@
 import { EmbedBuilder } from 'discord.js'
 import { getShiftTime, getAllShifts } from '../time.js'
 
-export function viewshifts(interaction) {
+export function shiftview(interaction) {
     const shifts = getAllShifts()
     let fields = []
 

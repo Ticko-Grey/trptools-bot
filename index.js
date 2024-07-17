@@ -30,7 +30,7 @@ rest.put(Routes.applicationCommands(process.env.CID_DISCORD), { body: config.com
 client.on("interactionCreate", (interaction) => {
   if (interaction.isChatInputCommand()) {
     // load command
-    const func = commands[interaction.commandName]
+    const func = commands[interaction.commandName.replace('-', '')]
     if (!func) { // handle error if command doesnt exist
       interaction.reply({
         content: "Could not fetch command",

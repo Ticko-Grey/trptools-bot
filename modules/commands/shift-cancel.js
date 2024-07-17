@@ -11,7 +11,7 @@ const dow = {
     6 : "saturday"
 }
 
-export function cancelshift(interaction) {
+export function shiftcancel(interaction) {
     const shifts = getCustomShifts()
 
     if (shifts.length == 0) {
