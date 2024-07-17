@@ -35,7 +35,15 @@ function getNearestShift(ignoreUID) {
     if (nextshift.dayOfWeek == currentDayOfWeek && nextshift.timeUTC.split(':')[0] <= currentHours) {
         nextshift = getNearestShift(nextshift.UID)
     }
-    return JSON.stringify(nextshift)
+
+    // replacement shift
+    const replacement = custom.find((shift) => shift.override == nextshift.UID)
+    console.log(replacement)
+    if (replacement) {
+        nextshift = replacement
+    }
+
+    return nextshift
 }
 
 export function getShiftTime(shiftObject) {
@@ -60,11 +68,19 @@ export function getNextShift() {
 }
 
 export function addCustomShift(day, time, id) {
+    let overrideShift = config.shiftTimes.find((shift) => shift.dayOfWeek == day && shift.timeUTC == time) || null
+    if (overrideShift) {
+        overrideShift = overrideShift.UID
+    }
+
     const shiftObject = {
         dayOfWeek : day,
         timeUTC : time,
-        UID : id || "Shift " + (Math.ceil(Math.random() * (100 - 16) + 16)).toString()
+        UID : id || "Shift " + (Math.ceil(Math.random() * (100 - 16) + 16)).toString(),
+        override: overrideShift
     }
+
+    console.log(shiftObject)
 
     const runTime = getShiftTime(shiftObject)
     shiftObject.expires = runTime
