@@ -40,7 +40,7 @@ client.on("interactionCreate", (interaction) => {
     }
 
     // run command
-    func(interaction)
+    func(interaction, client)
   } else {
     // load interaction handler
     const func = interactionHandlers[interaction.customId]
@@ -53,7 +53,7 @@ client.on("interactionCreate", (interaction) => {
     }
 
     // handle interaction
-    func(interaction)
+    func(interaction, client)
   }
 });
 

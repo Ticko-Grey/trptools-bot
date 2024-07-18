@@ -38,7 +38,6 @@ function getNearestShift(ignoreUID) {
 
     // replacement shift
     const replacement = custom.find((shift) => shift.override == nextshift.UID)
-    console.log(replacement)
     if (replacement) {
         nextshift = replacement
     }
@@ -79,8 +78,6 @@ export function addCustomShift(day, time, id) {
         UID : id || "Shift " + (Math.ceil(Math.random() * (100 - 16) + 16)).toString(),
         override: overrideShift
     }
-
-    console.log(shiftObject)
 
     const runTime = getShiftTime(shiftObject)
     shiftObject.expires = runTime
