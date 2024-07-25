@@ -1,5 +1,6 @@
 // Required Modules
 import { Client, Events, GatewayIntentBits, Routes, REST } from 'discord.js'
+import storage from 'node-persist';
 import 'dotenv/config'
 import fs from 'fs'
 
@@ -10,6 +11,8 @@ import * as commands from "./modules/commands/index.js"
 import * as interactionHandlers from "./modules/interactions/index.js"
 
 // Setup
+storage.init()
+
 const config = configFile.get()
 
 const client = new Client({

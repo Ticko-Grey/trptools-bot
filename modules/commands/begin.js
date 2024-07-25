@@ -1,11 +1,12 @@
 import { EmbedBuilder } from 'discord.js'
 import * as configFile from "../config.js"
+import storage from 'node-persist';
 import { getNextShift, getShiftTime  } from "../time.js"
 const config = configFile.get()
 
-export async function announce(interaction, client) {
+export async function begin(interaction, client) {
+    const nextShift = getNextShift(false)
     const shiftChannel = client.channels.cache.get(config.channels.shifts)
-    const nextShift = getNextShift(true)
 
     if (!shiftChannel) {
         const errorEmbedResponse = new EmbedBuilder()
@@ -20,15 +21,23 @@ export async function announce(interaction, client) {
     return
     }
 
-    const relativeTime = Math.floor(getShiftTime(nextShift).getTime() / 1000)
+    let note = await storage.getItem('shift-note')
+    const id = await storage.getItem('shift-id') || config.ids.server_ownerid
+
+    if (note) {
+        note = note + ' \n \n'
+    } else {
+        note = ''
+    }
 
     const shiftEmbed = new EmbedBuilder()
         .setColor(0x4287f5)
         .setTitle(`Shift announcement`)
-        .setDescription(`${nextShift.UID} is scheduled for <t:${relativeTime}:F> (<t:${relativeTime}:R>)`)
+        .setDescription(`${nextShift.UID} is starting now. \n \n${note}[Click here to join](https://www.roblox.com/games/start?placeId=2337102976&launchData={"Server":${id}}) \n(or join through the self hosted servers tab)`)
         .setFooter({iconURL: `https://cdn.discordapp.com/icons/${interaction.guild.id}/${interaction.guild.icon}.png`, text: interaction.guild.name + " • Hosted by " + interaction.member.nickname})
 
     await shiftChannel.send({
+        content: `<@&${config.roles.shiftping}>`,
         embeds: [shiftEmbed]
     })
 
