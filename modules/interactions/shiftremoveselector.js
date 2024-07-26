@@ -1,12 +1,13 @@
 import { EmbedBuilder } from 'discord.js'
 import { removeCustomShift, getCustomShifts, getShiftTime } from '../time.js'
 
-export function shiftremoveselector(interaction) {
+export async function shiftremoveselector(interaction) {
     const shiftToRemove = interaction.values[0]
-    const shiftData = getCustomShifts().find((v) => v.UID == shiftToRemove)
+    const shifts= await getCustomShifts()
+    const shiftData = shifts.find((v) => v.UID == shiftToRemove)
     const shiftTime = getShiftTime(shiftData)
 
-    removeCustomShift(shiftToRemove)
+    await removeCustomShift(shiftToRemove)
 
     const embedResponse = new EmbedBuilder()
         .setColor(0x4287f5)

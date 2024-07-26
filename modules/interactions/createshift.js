@@ -35,7 +35,7 @@ export async function createshift(interaction) {
         return
     }
     
-    const shiftObject = addCustomShift(dayOfWeek.num, time, uid)
+    const shiftObject = await addCustomShift(dayOfWeek.num, time, uid)
     const shiftTime = getShiftTime(shiftObject)
 
     const embedResponse = new EmbedBuilder()

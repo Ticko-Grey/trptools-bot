@@ -5,7 +5,7 @@ const config = configFile.get()
 
 export async function announce(interaction, client) {
     const shiftChannel = client.channels.cache.get(config.channels.shifts)
-    const nextShift = getNextShift(true)
+    const nextShift = await getNextShift(true)
 
     if (!shiftChannel) {
         const errorEmbedResponse = new EmbedBuilder()

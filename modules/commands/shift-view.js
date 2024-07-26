@@ -1,8 +1,8 @@
 import { EmbedBuilder } from 'discord.js'
 import { getShiftTime, getAllShifts } from '../time.js'
 
-export function shiftview(interaction) {
-    const shifts = getAllShifts()
+export async function shiftview(interaction) {
+    const shifts = await getAllShifts()
     let fields = []
 
     for (let i = 0; i < shifts.length; i++) { // loop thru shifts to add no repeat to custom shifts and remove overridden config shifts

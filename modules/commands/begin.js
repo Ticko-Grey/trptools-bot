@@ -1,11 +1,11 @@
 import { EmbedBuilder } from 'discord.js'
 import * as configFile from "../config.js"
 import storage from 'node-persist';
-import { getNextShift, getShiftTime  } from "../time.js"
+import { getNextShift  } from "../time.js"
 const config = configFile.get()
 
 export async function begin(interaction, client) {
-    const nextShift = getNextShift(false)
+    const nextShift = await getNextShift(false)
     const shiftChannel = client.channels.cache.get(config.channels.shifts)
 
     if (!shiftChannel) {

@@ -1,19 +1,29 @@
 import * as configFile from "./config.js"
+import storage from 'node-persist';
 const config = configFile.get()
 
-let custom = []
-
-export function getAllShifts() {
-    return config.shiftTimes.concat(custom)
-}
-
-export function getCustomShifts() {
+export async function getAllShifts() {
+    let custom = await storage.getItem('shifts')
+    if (custom) {
+        custom = config.shiftTimes.concat(custom)
+    } else {
+        custom = config.shiftTimes
+    }
     return custom
 }
 
-export function removeCustomShift(id) {
+export async function getCustomShifts() {
+    let custom = await storage.getItem('shifts')
+    if (!custom) {custom = []}
+    return custom
+}
+
+export async function removeCustomShift(id) {
+    let custom = await storage.getItem('shifts')
+    if (!custom) {custom = []}
     const shiftObjectIndex = custom.findIndex((sh) => sh.UID == id)
     custom.splice(shiftObjectIndex, 1)
+    storage.setItem('shifts', custom)
 }
 
 export function getShiftTime(shiftObject, offset) {
@@ -45,8 +55,10 @@ export function getShiftTime(shiftObject, offset) {
     return currentDate
 }
 
-function getNearestShift(ignoreUID, futureOnly) {
+async function getNearestShift(ignoreUID, futureOnly) {
     // join the config times with the times set during runtimes
+    let custom = await storage.getItem('shifts')
+    if (!custom) {custom = []}
     let shiftTimes = config.shiftTimes.concat(custom)
 
     // get the current date
@@ -97,11 +109,13 @@ if futureOnly == false:
 includes the true nearest shift (shifts from up to an hour ago included)
 this is useful for something like the begin command, which may be ran a few minutes late depending on the operator
 */
-export function getNextShift(futureOnly) {
-    return getNearestShift(0, futureOnly)
+export async function getNextShift(futureOnly) {
+    return await getNearestShift(0, futureOnly)
 }
 
-export function addCustomShift(day, time, id) {
+export async function addCustomShift(day, time, id) {
+    let custom = await storage.getItem('shifts')
+    if (!custom) {custom = []}
     let overrideShift = config.shiftTimes.find((shift) => shift.dayOfWeek == day && shift.timeUTC == time) || null
     if (overrideShift) {
         overrideShift = overrideShift.UID
@@ -118,5 +132,6 @@ export function addCustomShift(day, time, id) {
     shiftObject.expires = runTime
 
     custom.push(shiftObject)
+    await storage.setItem('shifts', custom)
     return shiftObject
 }

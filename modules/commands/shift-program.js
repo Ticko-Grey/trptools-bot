@@ -11,7 +11,7 @@ export async function shiftprogram(interaction, client) {
     let reset = interaction.options.getBoolean('reset');
     const oldNote = await storage.getItem('shift-note')
     const oldOwner = await storage.getItem('shift-id') || config.ids.server_ownerid
-    const nextShift = getNextShift(false)
+    const nextShift = await getNextShift(false)
     const relativeTime = Math.floor(getShiftTime(nextShift).getTime() / 1000) 
     const dist = relativeTime - new Date().getTime() / 1000
 

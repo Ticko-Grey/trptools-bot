@@ -11,8 +11,8 @@ const dow = {
     6 : "saturday"
 }
 
-export function shiftcancel(interaction) {
-    const shifts = getCustomShifts()
+export async function shiftcancel(interaction) {
+    const shifts = await getCustomShifts()
 
     if (shifts.length == 0) {
         const errorEmbedResponse = new EmbedBuilder()
