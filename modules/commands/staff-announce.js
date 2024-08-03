@@ -12,61 +12,71 @@ export async function staffannounce(interaction, client) {
     let i = 1
 
     // loop through for every role that needs to be requested
-    config.activityObjects.forEach(async (activityObject) => {
-        channelIds.push({name: "Channel " + i, value: `<#${activityObject.channel}>`, inline: true})
-        i++
-        const shiftChannel = client.channels.cache.get(activityObject.channel)
+    const deletelist = await storage.getItem('deleteList') || []
+    var loopPromise = new Promise((resolve, reject) => {
+        config.activityObjects.forEach(async (activityObject, index, array) => {
+            channelIds.push({ name: "Channel " + i, value: `<#${activityObject.channel}>`, inline: true })
+            i++
+            const shiftChannel = client.channels.cache.get(activityObject.channel)
 
-        // create fields
-        let fields = []
-        let dropdownOptions = []
-        Object.keys(activityObject.positions).forEach((k) => {
-            fields.push({name: k, value: "Empty", inline: false})
+            // create fields
+            let fields = []
+            let dropdownOptions = []
+            Object.keys(activityObject.positions).forEach((k) => {
+                fields.push({ name: k, value: "Empty", inline: false })
 
-            dropdownOptions.push(
-                new StringSelectMenuOptionBuilder()
-                    .setLabel(k)
-                    .setDescription(activityObject.positions[k])
-                    .setValue(k),
-            )
-        })
+                dropdownOptions.push(
+                    new StringSelectMenuOptionBuilder()
+                        .setLabel(k)
+                        .setDescription(activityObject.positions[k])
+                        .setValue(k),
+                )
+            })
 
-        // generate embed
-        const embedTitle = `${activityObject.name} activity request`
-        const embedDescription = `Sign up for the shift scheduled for <t:${relativeTime}:F> (<t:${relativeTime}:R>) by using the dropdown below`
-        const embed = new EmbedBuilder()
-            .setColor(0x69f079)
-            .setTitle(embedTitle)
-            .setDescription(embedDescription)
-            .addFields(fields)
+            // generate embed
+            const embedTitle = `${activityObject.name} activity request`
+            const embedDescription = `Sign up for the shift scheduled for <t:${relativeTime}:F> (<t:${relativeTime}:R>) by using the dropdown below`
+            const embed = new EmbedBuilder()
+                .setColor(0x69f079)
+                .setTitle(embedTitle)
+                .setDescription(embedDescription)
+                .addFields(fields)
 
-        // generate interaction row 
-        const select = new StringSelectMenuBuilder()
-            .setCustomId('staffsignup')
-            .setPlaceholder('Select a slot')
-            .setMaxValues(1)
-            .setMinValues(1)
-            .addOptions(dropdownOptions);
-        const row = new ActionRowBuilder()
-            .addComponents(select);
+            // generate interaction row 
+            const select = new StringSelectMenuBuilder()
+                .setCustomId('staffsignup')
+                .setPlaceholder('Select a slot')
+                .setMaxValues(1)
+                .setMinValues(1)
+                .addOptions(dropdownOptions);
+            const row = new ActionRowBuilder()
+                .addComponents(select);
 
-        // send message
-        const message = await shiftChannel.send({
-            content: `<@&${activityObject.ping}>`,
-            components : [ row ],
-            embeds : [ embed ]
-        })
+            // send message
+            const message = await shiftChannel.send({
+                content: `<@&${activityObject.ping}>`,
+                components: [row],
+                embeds: [embed]
+            })
 
-        // store message
-        let interactionStorage = {
-            strings: {title: embedTitle, description: embedDescription},
-            positions: activityObject.positions,
-            vacancy : {}
-        }
+            // store message
+            let interactionStorage = {
+                strings: { title: embedTitle, description: embedDescription },
+                positions: activityObject.positions,
+                vacancy: {}
+            }
 
-        storage.setItem(message.id + '_interaction', interactionStorage)
+            storage.setItem(message.id + '_interaction', interactionStorage)
+            deletelist.push({ channel: message.channel.id, message: message.id })
+
+            if (index === array.length - 1) resolve();
+        });
+    });
+
+    loopPromise.then(() => {
+        storage.setItem('deleteList', deletelist)
     })
-
+    
     const embedResponse = new EmbedBuilder()
     .setColor(0x69f079)
     .setTitle("Staff announcement message sent")
