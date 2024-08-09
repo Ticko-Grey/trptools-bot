@@ -1,12 +1,9 @@
 {
-  "name": "floof-bot",
+  "name": "trptools-bot",
   "version": "1.0.0",
-  "description": "discord.js bot for floof transit",
+  "description": "discord.js bot created to provide trptools shift functionality",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "TickoGrey",
   "license": "UNLICENSED",
   "dependencies": {
