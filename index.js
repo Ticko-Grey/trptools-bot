@@ -1,3 +1,9 @@
+/*
+    trptools-bot is an unofficial open source web service which aims to provide easy to use tools to the TrP community 
+    Copyright (C) 2024 TickoGrey
+    You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+*/
+
 // Required Modules
 import { Client, Events, GatewayIntentBits, Routes, REST } from 'discord.js'
 import storage from 'node-persist';
