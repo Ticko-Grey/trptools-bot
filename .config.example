@@ -1,0 +1,115 @@
+----------------------------------
+REMOVE THIS SECTION FROM CONFIG FILE
+CREATE config.json
+DO NOT EDIT PREFILLED ITEMS (excluding pollObject)
+DO NOT LEAVE ANY ITEMS BLANK
+ARRAYS FILLED WITH EXAMPLE OBJECTS CAN BE POPULATED
+----------------------------------
+
+{
+    "endpoints" : {
+        "rover" : "https://registry.rover.link/api/guilds/1096140069254991974/discord-to-roblox/"
+    },
+    "ids" : {
+        "discord_appid" : "<discord app id>",
+        "operational_guild" : "<discord server id>",
+        "roblox_groupid" : <group id>,
+        "server_ownerid" : <shs server owner id>
+    },
+    "shiftTimes" : [
+        { "dayOfWeek": <number 0-6>, "timeUTC": "<utc time 00:00-23:59>", "UID" : "<unique name>" },
+    ],
+    "channels" : {
+        "shifts" : "<channel id for shift announcements>",
+        "polls" : "<channel ID for polls>"
+    },
+    "roles" : {
+        "shiftping" : "<role id for shift ping>"
+    },
+    "commands" : [
+        {
+            "name": "shift-create",
+            "description": "Add a shift to the schedule"
+        },
+        {
+            "name": "shift-view",
+            "description": "View the current schedule"
+        },
+        {
+            "name": "shift-cancel",
+            "description": "Cancel a scheduled shift"
+        },
+        {
+            "name": "shift-program",
+            "description": "Change data about the upcoming shift",
+            "options": [
+                {
+                    "name": "note",
+                    "type": 3,
+                    "required": false,
+                    "description": "The note for this shift"
+                },
+                {
+                  "name": "owner",
+                  "type": 3,
+                  "required": false,
+                  "description": "The ID of the server owner"
+                },
+                {
+                    "name": "reset",
+                    "description": "Reset the shift program",
+                    "type": 5,
+                    "required": false
+                }
+              ]
+        },
+        {
+            "name": "announce",
+            "description": "Announce a scheduled shift"
+        },
+        {
+            "name": "begin",
+            "description": "Begin a scheduled shift"
+        },
+        {
+            "name": "staff-announce",
+            "description": "Request activity from staff"
+        },
+        {
+            "name": "complete",
+            "description": "Wrap up the currently running shift"
+        }
+    ],
+    "activityObjects" : [
+        {
+            "name" : "<rank name>",
+            "channel" : "<channel id for this rank>",
+            "ping" : "<role to ping for signup>",
+            "positions" : {
+                "<position name>" : "<position description>",
+            }
+        },
+    ],
+    "pollObject" : [
+        {
+          "text" : "I loved it",
+          "emoji" : "❤️"
+        },
+        {
+          "text" : "I liked it",
+          "emoji" : "👍"
+        },
+        {
+          "text" : "It could be better",
+          "emoji" : "🤷"
+        },
+        {
+          "text" : "I did not like it",
+          "emoji" : "👎"
+        },
+        {
+          "text" : "I hated it",
+          "emoji" : "💔"
+        }
+    ]
+}
