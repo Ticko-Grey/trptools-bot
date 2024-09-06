@@ -1,6 +1,6 @@
+import { EmbedBuilder } from 'discord.js'
 import * as configFile from "../config.js";
 const config = configFile.get();
-import storage from 'node-persist';
 
 function addLeadingZero(num) {
     if (num <= 9) {
@@ -12,15 +12,11 @@ function addLeadingZero(num) {
 
 
 export async function complete(interaction, client) {
-    const store = await storage.getItem('deleteList')
-    store.forEach(async (d) => {
-        let c = await client.channels.cache.get(d.channel)
-        let m = await c.messages.cache.get(d.message)
-
-        m.delete()
+    await config.channels.clearChannels.forEach(async (d) => {
+        let c = await client.channels.cache.get(d)
+        c.messages.fetch({ limit: 10, cache: false })
+        .then(messages => c.bulkDelete(messages));
     })
-
-    storage.removeItem('deleteList')
 
     const date = new Date();
     const formattedDate = `${date.getUTCFullYear()}-${addLeadingZero(date.getUTCMonth() + 1)}-${addLeadingZero(date.getUTCDate())}`

@@ -1,7 +1,6 @@
 import { EmbedBuilder } from 'discord.js'
 import * as configFile from "../config.js"
 import { getNextShift, getShiftTime  } from "../time.js"
-import storage from 'node-persist';
 const config = configFile.get()
 
 export async function announce(interaction, client) {
@@ -29,13 +28,9 @@ export async function announce(interaction, client) {
         .setDescription(`${nextShift.UID} is scheduled for <t:${relativeTime}:F> (<t:${relativeTime}:R>)`)
         .setFooter({iconURL: `https://cdn.discordapp.com/icons/${interaction.guild.id}/${interaction.guild.icon}.png`, text: interaction.guild.name + " • Hosted by " + interaction.member.nickname})
 
-    const ShiftMessage = await shiftChannel.send({
+    await shiftChannel.send({
         embeds: [shiftEmbed]
     })
-
-    const deletelist = await storage.getItem('deleteList') || null
-    deletelist.push({channel: ShiftMessage.channel.id, message: ShiftMessage.id})
-    storage.setItem('deleteList', deletelist)
 
     const responseEmbed = new EmbedBuilder()
         .setColor(0x69f079)
