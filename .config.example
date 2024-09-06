@@ -8,7 +8,7 @@ ARRAYS FILLED WITH EXAMPLE OBJECTS CAN BE POPULATED
 
 {
     "endpoints" : {
-        "rover" : "https://registry.rover.link/api/guilds/1096140069254991974/discord-to-roblox/"
+        "rover" : "https://registry.rover.link/api/guilds/<guildId>/discord-to-roblox/"
     },
     "ids" : {
         "discord_appid" : "<discord app id>",
@@ -21,7 +21,10 @@ ARRAYS FILLED WITH EXAMPLE OBJECTS CAN BE POPULATED
     ],
     "channels" : {
         "shifts" : "<channel id for shift announcements>",
-        "polls" : "<channel ID for polls>"
+        "polls" : "<channel ID for polls>",
+        "clearChannels : [
+            "<channelIds to clear after shift>
+        ]
     },
     "roles" : {
         "shiftping" : "<role id for shift ping>"
