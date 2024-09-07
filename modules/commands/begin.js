@@ -37,7 +37,7 @@ export async function begin(interaction, client) {
         .setFooter({iconURL: `https://cdn.discordapp.com/icons/${interaction.guild.id}/${interaction.guild.icon}.png`, text: interaction.guild.name + " • Hosted by " + interaction.member.nickname})
 
     await shiftChannel.send({
-        //content: `<@&${config.roles.shiftping}>`,
+        content: `<@&${config.roles.shiftping}>`,
         embeds: [shiftEmbed]
     })
 

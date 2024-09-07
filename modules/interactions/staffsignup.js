@@ -16,7 +16,7 @@ async function updateEmbed(message, storage) {
     })
 
     const embed = new EmbedBuilder()
-        .setColor(0x69f079)
+        .setColor(storage.color)
         .setTitle(storage.strings.title)
         .setDescription(storage.strings.description)
         .addFields(fields)
@@ -52,9 +52,9 @@ export async function staffsignup(interaction, client) {
             storage.setItem(interaction.message.id + '_interaction', interactionStorage)
 
             updateEmbed(interaction.message, interactionStorage)
-            responseEmbed(interaction, "Removed from shift slot", 0x69f079, `Removed from slot **${selection}**`)
+            responseEmbed(interaction, "Removed from shift slot", interactionStorage.color, `Removed from slot **${selection}**`)
         } else { // slot taken by someone else
-            responseEmbed(interaction, "Slot already taken", 0xa83232, `Slot **${selection}** is already taken by <@${vacancy}>`)
+            responseEmbed(interaction, "Slot already taken", interactionStorage.color, `Slot **${selection}** is already taken by <@${vacancy}>`)
         }
         return
     }
@@ -67,7 +67,7 @@ export async function staffsignup(interaction, client) {
         }
     })
     if (haveslot) {
-        responseEmbed(interaction, "Slot already taken", 0xa83232, `You have already taken the **${haveslot}** slot, select it again to remove yourself`)
+        responseEmbed(interaction, "Slot already taken", interactionStorage.color, `You have already taken the **${haveslot}** slot, select it again to remove yourself`)
         return
     }
 
@@ -77,5 +77,5 @@ export async function staffsignup(interaction, client) {
 
     // edit embed
     updateEmbed(interaction.message, interactionStorage)
-    responseEmbed(interaction, "Signed up for shift", 0x69f079, `Signed up for **${selection}** slot`)
+    responseEmbed(interaction, "Signed up for shift", interactionStorage.color, `Signed up for **${selection}** slot`)
 }

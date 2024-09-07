@@ -35,7 +35,7 @@ export async function staffannounce(interaction, client) {
         const embedTitle = `${activityObject.name} activity request`
         const embedDescription = `Sign up for the shift scheduled for <t:${relativeTime}:F> (<t:${relativeTime}:R>) by using the dropdown below`
         const embed = new EmbedBuilder()
-            .setColor(0x69f079)
+            .setColor(activityObject.color)
             .setTitle(embedTitle)
             .setDescription(embedDescription)
             .addFields(fields)
@@ -61,13 +61,11 @@ export async function staffannounce(interaction, client) {
         let interactionStorage = {
             strings: { title: embedTitle, description: embedDescription },
             positions: activityObject.positions,
+            color : activityObject.color,
             vacancy: {}
         }
 
         storage.setItem(message.id + '_interaction', interactionStorage)
-        deletelist.push({ channel: message.channel.id, message: message.id })
-
-        if (index === array.length - 1) resolve();
     });
     
     const embedResponse = new EmbedBuilder()
