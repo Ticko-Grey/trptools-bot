@@ -15,6 +15,7 @@ import * as time from "./modules/time.js"
 import * as configFile from "./modules/config.js"
 import * as commands from "./modules/commands/index.js"
 import * as interactionHandlers from "./modules/interactions/index.js"
+import dispatchupdate from "./modules/dispatchupdate.js"
 
 // Setup
 storage.init()
@@ -67,4 +68,6 @@ client.on("interactionCreate", (interaction) => {
 });
 
 // Establish connection
-client.login(process.env.API_DISCORD)
+client.login(process.env.API_DISCORD).then(() => {
+  dispatchupdate(client)
+})

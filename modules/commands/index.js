@@ -6,3 +6,4 @@ export { begin } from './begin.js';
 export { shiftprogram } from './shift-program.js';
 export { staffannounce } from './staff-announce.js';
 export { complete } from './complete.js'
+export { dispatchcode } from './dispatch-code.js'

@@ -37,9 +37,24 @@ export async function begin(interaction, client) {
         .setFooter({iconURL: `https://cdn.discordapp.com/icons/${interaction.guild.id}/${interaction.guild.icon}.png`, text: interaction.guild.name + " • Hosted by " + interaction.member.nickname})
 
     await shiftChannel.send({
-        content: `<@&${config.roles.shiftping}>`,
+        //content: `<@&${config.roles.shiftping}>`,
         embeds: [shiftEmbed]
     })
+
+    const code = await storage.getItem("dispatchCode")
+
+    if (code) {
+        const dispatchEmbed = new EmbedBuilder()
+        .setColor(0xc27c0e)
+        .setTitle("Live server stats")
+        .setDescription(`Connecting to dispatch server...`)
+
+        const dispatchMessage = await shiftChannel.send({
+            embeds: [dispatchEmbed],
+        })
+
+        storage.setItem("dispatchCode", {code: code.code, message: dispatchMessage.id})
+    }
 
     const responseEmbed = new EmbedBuilder()
         .setColor(0x69f079)

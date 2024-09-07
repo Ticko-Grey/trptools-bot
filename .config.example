@@ -81,6 +81,18 @@ ARRAYS FILLED WITH EXAMPLE OBJECTS CAN BE POPULATED
         {
             "name": "complete",
             "description": "Wrap up the currently running shift"
+        },
+        {
+            "name": "dispatch-code",
+            "description": "Change data about the upcoming shift",
+            "options": [
+                {
+                    "name": "code",
+                    "type": 3,
+                    "required": true,
+                    "description": "The dispatch room code"
+                }
+              ]
         }
     ],
     "activityObjects" : [

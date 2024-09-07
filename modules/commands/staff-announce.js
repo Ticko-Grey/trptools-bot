@@ -2,6 +2,7 @@ import * as configFile from "../config.js";
 const config = configFile.get();
 import { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from 'discord.js';
 import { getNextShift, getShiftTime  } from "../time.js";
+import storage from 'node-persist';
 
 export async function staffannounce(interaction, client) {
     const nextShift = await getNextShift(true)

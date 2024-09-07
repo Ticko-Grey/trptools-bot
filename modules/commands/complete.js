@@ -1,5 +1,6 @@
 import { EmbedBuilder } from 'discord.js'
 import * as configFile from "../config.js";
+import storage from 'node-persist';
 const config = configFile.get();
 
 function addLeadingZero(num) {
@@ -17,6 +18,8 @@ export async function complete(interaction, client) {
         c.messages.fetch({ limit: 10, cache: false })
         .then(messages => c.bulkDelete(messages));
     })
+
+    storage.removeItem('dispatchCode')
 
     const date = new Date();
     const formattedDate = `${date.getUTCFullYear()}-${addLeadingZero(date.getUTCMonth() + 1)}-${addLeadingZero(date.getUTCDate())}`
