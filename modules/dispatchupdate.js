@@ -37,10 +37,12 @@ export default async function dispatchupdate(client) {
                 .setTitle("Live server stats")
                 .setDescription("Reconnecting to dispatch server...")
 
-            const message = await channel.messages.fetch(dispatchCodeItem.message)
-            message.edit({
-                embeds: [dispatchEmbed]
-            })
-        }
+            try {
+                const message = await channel.messages.fetch(dispatchCodeItem.message)
+                message.edit({
+                    embeds: [dispatchEmbed]
+                })
+            } catch {}
+            }
     }, 10 * 1000);
 }
