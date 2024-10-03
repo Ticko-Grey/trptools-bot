@@ -93,6 +93,18 @@ ARRAYS FILLED WITH EXAMPLE OBJECTS CAN BE POPULATED
                     "description": "The dispatch room code"
                 }
               ]
+        },
+        {
+            "name": "staff-begin",
+            "description": "Open the server to staff",
+            "options": [
+                {
+                    "name": "code",
+                    "type": 4,
+                    "required": true,
+                    "description": "The server code"
+                }
+              ]
         }
     ],
     "activityObjects" : [

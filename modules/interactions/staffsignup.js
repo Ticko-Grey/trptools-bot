@@ -49,7 +49,8 @@ export async function staffsignup(interaction, client) {
     if (vacancy) {
         if (interactionStorage.vacancy[selection] == interaction.user.id) { // remove slot
             interactionStorage.vacancy[selection] = null
-            storage.setItem(interaction.message.id + '_interaction', interactionStorage)
+            storage.setItem(interaction.message.id + '_interaction', interactionStorage)    
+            storage.setItem(interactionStorage.ping + "_ping", interactionStorage.vacancy)
 
             updateEmbed(interaction.message, interactionStorage)
             responseEmbed(interaction, "Removed from shift slot", interactionStorage.color, `Removed from slot **${selection}**`)
@@ -74,6 +75,7 @@ export async function staffsignup(interaction, client) {
     // set this slot as occupied
     interactionStorage.vacancy[selection] = interaction.user.id
     storage.setItem(interaction.message.id + '_interaction', interactionStorage)
+    storage.setItem(interactionStorage.ping + "_ping", interactionStorage.vacancy)
 
     // edit embed
     updateEmbed(interaction.message, interactionStorage)

@@ -62,6 +62,7 @@ export async function staffannounce(interaction, client) {
             strings: { title: embedTitle, description: embedDescription },
             positions: activityObject.positions,
             color : activityObject.color,
+            ping : activityObject.ping,
             vacancy: {}
         }
 
