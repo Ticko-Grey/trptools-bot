@@ -15,7 +15,7 @@ export async function staffbegin(interaction, client) {
         i++
         const pings = await storage.getItem(activityObject.ping + "_ping")
         const shiftChannel = client.channels.cache.get(activityObject.channel)
-        const staffCode = interaction.options.getInteger('code');
+        const staffCode = interaction.options.getString('code');
         const id = await storage.getItem('shift-id') || config.ids.server_ownerid
 
         let pingstring = ""
