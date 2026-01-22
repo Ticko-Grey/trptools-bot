@@ -1,5 +1,7 @@
-# trptools-bot
-<img src="https://cdn.trptools.com/icon.webp" alt="icon" width="150"/>
+# trptools-bot-legacy
+
+## NOTICE:
+trptools-bot-legacy has been archived, you can access the modern trptools-bot written in typescript with multi user support at https://github.com/TrP-Labs/trptools-bot
 
 # What is trptools-bot?
 trptools-bot is an unofficial open source discord bot which aims to provide easy to use shift hosting functionality to the [TrP community](https://www.roblox.com/groups/4572671/Trolleybuses-Fan-Group). <br>
